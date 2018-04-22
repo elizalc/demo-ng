@@ -1,5 +1,52 @@
 <div class="container">
-  <form action="">
-    
+  <!-- <form action="">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input name="email" type="email" class="form-control" [(ngModel)]="email" placeholder="Email" required>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input name="password" type="password" class="form-control" [(ngModel)]="password" placeholder="Password" required>
+    </div>
+    <div class="form-group">
+      <button [disabled]="!email || !password" type="buton" class="btn btn-primary btn-block" style="margin-bottom: 20px" (click)="login()" >Login with Email</button>
+    </div>
+  </form> -->
+  <form [formGroup]="userForm" *ngIf="newUser" (ngSubmit)="signup()">
+    <h3>Registrate</h3>
+    <p (click)="toggleForm()">Ya tengo una cuenta</p>
+    <hr>
+    <label for="email">Correo electrónico</label>
+    <input type="email" formControlName="email" [(ngModel)]="email" required>
+    <div *ngIf="formErrors.email">
+      {{ formErrors.email }}
+    </div>
+    <label for="password">Contraseña</label>
+    <input type="password" formControlName="password" [(ngModel)]="password" required>
+    <div *ngIf="formErrors.password">
+      {{ formErrors.password }}
+    </div>
+    <button type="submit" [disabled]="!userForm.valid">Registrar</button>
+    <!-- <span *ngIf="userForm.valid">Form is valid</span> -->
+  </form>
+  <form [formGroup]="userForm" *ngIf="!newUser" (ngSubmit)="login()">
+    <h3>Ingresa aquí</h3>
+    <p (click)="toggleForm()">Aún no tengo una cuenta</p>
+    <hr>
+    <label for="email">Correo electrónico</label>
+    <input type="email" formControlName="email" [(ngModel)]="email" required>
+    <div *ngIf="formErrors.email">
+      {{ formErrors.email }}
+    </div>
+    <label for="password">Contraseña</label>
+    <input type="password" formControlName="password" [(ngModel)]="password" required>
+    <div *ngIf="formErrors.password">
+      {{ formErrors.password }}
+    </div>
+    <button type="submit" [disabled]="!userForm.valid">Ingresar</button>
+    <!-- <span *ngIf="userForm.valid">Form is valid</span> -->
   </form>
 </div>
+<button (click)="logout()" *ngIf="authService.user | async">
+  Logout
+</button>

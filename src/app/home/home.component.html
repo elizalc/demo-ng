@@ -1,7 +1,71 @@
-<p>
-  home works!
-</p>
-<div class="col-4">
-  algo pasa aqui
+<div class="container">
+  <ngb-tabset #t="ngbTabset">
+    <ngb-tab id="tab-selectbyid1" title="Registro de Clientes">
+      <ng-template ngbTabContent>
+        <form [formGroup]="registerForm" *ngIf="!newUser" (ngSubmit)="postDate()">
+          <h3>Ingresa aquí</h3>
+          <hr>
+          <div class="form-group">
+            <label for="name">Nombres</label>
+            <input type="name" formControlName="name" [(ngModel)]="name" required>
+            <div *ngIf="formErrors.name">
+              {{ formErrors.name }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname">Apellidos</label>
+            <input type="name" formControlName="lastname" [(ngModel)]="lastname" required>
+            <div *ngIf="formErrors.lastname">
+              {{ formErrors.lastname }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" formControlName="email" [(ngModel)]="email">
+            <div *ngIf="formErrors.email">
+              {{ formErrors.email }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cellphone">Celular</label>
+            <input type="name" formControlName="cellphone" [(ngModel)]="cellphone" required>
+            <div *ngIf="formErrors.cellphone">
+              {{ formErrors.cellphone }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="birthday">Fecha de Nacimiento</label>
+            <input type="date" formControlName="birthday" [(ngModel)]="birthday" required>
+            <div *ngIf="formErrors.birthday">
+              {{ formErrors.birthday }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="gender">Género</label>
+            <select formControlName="gender" [(ngModel)]="gender" required>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+            </select>
+            <div *ngIf="formErrors.gender">
+              {{ formErrors.gender }}
+            </div>
+          </div>
+          <button type="submit" [disabled]="!registerForm.valid">Registrar</button>
+          <!-- <span *ngIf="registerForm.valid">Form is valid</span> -->
+        </form>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="tab-selectbyid2">
+      <ng-template ngbTabTitle>
+        <b>Reporte</b></ng-template>
+      <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+        <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft
+          beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum
+          PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero
+          magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard
+          ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente
+          accusamus tattooed echo park.</p>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
 </div>
-<button>Algo</button>
