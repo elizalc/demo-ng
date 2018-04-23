@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import { AgeService } from "../services/age.service";
+import { ChartsModule } from 'ng2-charts';
 
 interface User {
   age: number,
@@ -26,8 +28,21 @@ export class HomeComponent implements OnInit {
   cellphone: string;
   birthday: string;
   gender: string;
+  canvas: any;
+  ctx: any;
+  chart = [];
+  ages = Object
 
-  constructor( @Inject(FormBuilder) private fb: FormBuilder, private afs: AngularFirestore ) { }
+  constructor( @Inject(FormBuilder) private fb: FormBuilder, private afs: AngularFirestore, private age:AgeService ) {
+    console.log(this.age.ages)
+    //this.getAge()
+    // this.ages[0] = this.age.getAges()[0]
+    // this.ages[18] = this.age.getAges()[18]
+    // this.ages[25] = this.age.getAges()[25]
+    // this.ages[35] = this.age.getAges()[35]
+    // this.ages[50] = this.age.getAges()[50]
+    
+  }
 
   ngOnInit() {
     this.buildForm();
@@ -46,17 +61,26 @@ export class HomeComponent implements OnInit {
     }
     return userRef.set(data, { merge: true })
   }
+  getAge() {
+    console.log(this.ages)
+    this.chartData[0].data = [this.ages[0], this.ages[18], this.ages[25], this.ages[35], this.ages()[50]]
+  }
+  //Chart settings
+  chartOptions = {
+    responsive: true
+  };
+
+  chartData = [
+    { data: [0,0,0,0,0]}
+  ];
+
+  chartLabels = ['0-18', '18-25', '25-35', '35-50', '50-más'];
+
+  onChartClick(event) {
+    console.log(event);
+  }
 
   postDate(){
-    // const data: User = {
-    //   age: this.submitBday(),
-    //   correo: this.email,
-    //   name: this.name,
-    //   lastname: this.lastname,
-    //   cellpohone: this.cellphone,
-    //   gender: this.gender
-    // }
-    // this.submitBday()
     console.log(this.submitBday())
     this.updateUserData(this.submitBday())
     //this.afs.doc<User>(`ages/${this.submitBday()}`)

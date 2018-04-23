@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -16,8 +17,10 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { ChartsModule } from 'ng2-charts';
 
 import { AuthserviceService } from './services/authservice.service';
+import { AgeService } from "./services/age.service";
 
 
 @NgModule({
@@ -37,9 +40,11 @@ import { AuthserviceService } from './services/authservice.service';
     AngularFirestoreModule,
     ToastrModule.forRoot(),
     NgbModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule,
+    ChartsModule
   ],
-  providers: [AuthserviceService],
+  providers: [AuthserviceService, AgeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
