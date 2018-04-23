@@ -1,0 +1,33 @@
+label {
+  width: 100%;
+  margin-bottom: 0;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+input, select {
+  border-radius: 20px;
+  border: 1px solid #63abdc;
+
+  width: 300px;
+  padding: 5px 15px;
+  &:focus {
+    outline: none;
+  }
+}
+
+button {
+  margin-top: 20px;
+  background: #63abdc;
+  border: 1px solid #63abdc;
+  color: white;
+  padding: 5px 20px;
+  border-radius: 10px;
+  &:enabled {
+    background: #376c8f;
+    border: 1px solid #34688b;
+    transition: all 0.5 ease;
+    cursor: pointer;
+  }
+}
+

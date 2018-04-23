@@ -31,17 +31,9 @@ export class HomeComponent implements OnInit {
   canvas: any;
   ctx: any;
   chart = [];
-  ages = Object
 
   constructor( @Inject(FormBuilder) private fb: FormBuilder, private afs: AngularFirestore, private age:AgeService ) {
-    console.log(this.age.ages)
-    //this.getAge()
-    // this.ages[0] = this.age.getAges()[0]
-    // this.ages[18] = this.age.getAges()[18]
-    // this.ages[25] = this.age.getAges()[25]
-    // this.ages[35] = this.age.getAges()[35]
-    // this.ages[50] = this.age.getAges()[50]
-    
+
   }
 
   ngOnInit() {
@@ -50,7 +42,7 @@ export class HomeComponent implements OnInit {
 
   private updateUserData(user) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`ages/${user}`);
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`ages/${this.email}`);
     const data: User = {
       age: this.submitBday(),
       correo: this.email,
@@ -62,16 +54,54 @@ export class HomeComponent implements OnInit {
     return userRef.set(data, { merge: true })
   }
   getAge() {
-    console.log(this.ages)
-    this.chartData[0].data = [this.ages[0], this.ages[18], this.ages[25], this.ages[35], this.ages()[50]]
+    this.age.showAge()
+      .subscribe(
+        res =>{
+          let ageObject = {
+            0: 0,
+            18: 0,
+            25: 0,
+            35: 0,
+            50: 0
+          }
+          for (let cart of res) {
+            if (cart.age >= 0 && cart.age < 18) {
+              ageObject[0]++
+            } else if (cart.age >= 18 && cart.age < 25) {
+              ageObject[18]++
+            } else if (cart.age >= 25 && cart.age < 35) {
+              ageObject[25]++
+            } else if (cart.age >= 35 && cart.age < 50) {
+              ageObject[35]++
+            } else if (cart.age >= 50) {
+              ageObject[50]++
+            }
+          }
+          console.log(ageObject[18])
+          this.chartData[0].data = [ageObject[0], ageObject[18], ageObject[25], ageObject[35], ageObject[50]]
+          this.chartData = this.chartData.slice()
+          console.log(this.chartData)
+          return ageObject
+        },
+        err => console.log(err)
+      )
   }
   //Chart settings
   chartOptions = {
-    responsive: true
+    responsive: true,
+    scales: {
+      yAxes: [{
+        ticks: {
+          steps: 5,
+          stepValue:2,
+          max: 30,
+        }
+      }]
+    }
   };
 
   chartData = [
-    { data: [0,0,0,0,0]}
+    { data: [10,10,10,10,10]}
   ];
 
   chartLabels = ['0-18', '18-25', '25-35', '35-50', '50-más'];
@@ -96,11 +126,11 @@ export class HomeComponent implements OnInit {
     this.registerForm = this.fb.group({
       'name': ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+$')
+        Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1])[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')
       ]],
       'lastname': ['', [
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+$')
+        Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1])[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')
       ]],
       'email': ['', [
         Validators.email
@@ -160,7 +190,6 @@ export class HomeComponent implements OnInit {
       'pattern': 'Ingresa un apellido válido'
     },
     'email': {
-      'required': 'El correo es obligatorio',
       'email': 'Ingresa un correo válido'
     },
     'cellphone': {

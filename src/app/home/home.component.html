@@ -3,7 +3,7 @@
     <ngb-tab id="tab-selectbyid1" title="Registro de Clientes">
       <ng-template ngbTabContent>
         <form [formGroup]="registerForm" *ngIf="!newUser" (ngSubmit)="postDate()">
-          <h3>Ingresa aquí</h3>
+          <h3>Registrate aquí</h3>
           <hr>
           <div class="form-group">
             <label for="name">Nombres</label>
@@ -21,7 +21,7 @@
           </div>
           <div class="form-group">
             <label for="email">Correo electrónico</label>
-            <input type="email" formControlName="email" [(ngModel)]="email">
+            <input type="email" formControlName="email" [(ngModel)]="email" [required]="false">
             <div *ngIf="formErrors.email">
               {{ formErrors.email }}
             </div>
@@ -58,13 +58,14 @@
     <ngb-tab id="tab-selectbyid2">
       <ng-template ngbTabTitle>
         <b>Reporte</b></ng-template>
-      <ng-template ngbTabContent>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
-        <div style="width: 40%;">
+      <ng-template ngbTabContent>
+        Tabla de control de edades
+        <div style="width: 80%;" *ngIf="chartData" class="mt-5">
           <canvas baseChart [chartType]="'bar'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions" [legend]="true"
             (chartClick)="onChartClick($event)">
           </canvas>
         </div>
-        <button (click)="getAge()">butoooon</button>
+        <button (click)="getAge()">Actualizar tabla</button>
       </ng-template>
     </ngb-tab>
   </ngb-tabset>
