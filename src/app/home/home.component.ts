@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, OnChanges  } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AgeService } from "../services/age.service";
@@ -6,7 +6,6 @@ import { ChartsModule } from 'ng2-charts';
 
 interface User {
   age: number,
-  correo: string,
   name: string,
   lastname: string,
   cellpohone: string,
@@ -19,7 +18,7 @@ interface User {
   styleUrls: ['./home.component.scss']
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnChanges {
 
   registerForm: FormGroup;
   name: string;
@@ -36,16 +35,21 @@ export class HomeComponent implements OnInit {
 
   }
 
+  ngOnChanges() {
+    this.rebuildForm();
+  }
+  rebuildForm() {
+    this.registerForm.reset();
+  }
   ngOnInit() {
     this.buildForm();
   }
 
   private updateUserData(user) {
     // Sets user data to firestore on login
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`ages/${this.email}`);
+    const userRef: AngularFirestoreDocument<User> = this.afs.doc(`ages/${user}`);
     const data: User = {
       age: this.submitBday(),
-      correo: this.email,
       name: this.name,
       lastname: this.lastname,
       cellpohone: this.cellphone,
@@ -113,6 +117,7 @@ export class HomeComponent implements OnInit {
   postDate(){
     console.log(this.submitBday())
     this.updateUserData(this.submitBday())
+    this.registerForm.reset();
     //this.afs.doc<User>(`ages/${this.submitBday()}`)
   }
   //Current age
@@ -132,11 +137,9 @@ export class HomeComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1])[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')
       ]],
-      'email': ['', [
-        Validators.email
-      ]],
       'cellphone': ['', [
         Validators.minLength(9),
+        Validators.maxLength(9),
         Validators.required,
         Validators.pattern('^[0-9]*$')
       ]
@@ -174,7 +177,6 @@ export class HomeComponent implements OnInit {
   formErrors = {
     'name': '',
     'lastname': '',
-    'email': '',
     'cellphone': '',
     'birthday': '',
     'gender': ''
@@ -189,11 +191,9 @@ export class HomeComponent implements OnInit {
       'required': 'Este campo es obligatorio',
       'pattern': 'Ingresa un apellido válido'
     },
-    'email': {
-      'email': 'Ingresa un correo válido'
-    },
     'cellphone': {
       'minlength': 'Debe tener 9 caracteres como mínimo',
+      'maxlength': 'Debe tener 9 caracteres como máximo',
       'required': 'Este campo es obligatorio',
       'pattern': 'Ingresa un celular válido'
     },
