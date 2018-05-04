@@ -19,8 +19,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { ChartsModule } from 'ng2-charts';
 
-import { MatInputModule } from '@angular/material';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MaterialModule } from './material.module';
 
 import { AuthserviceService } from './services/authservice.service';
 import { AgeService } from "./services/age.service";
@@ -46,8 +45,7 @@ import { AgeService } from "./services/age.service";
     BrowserAnimationsModule,
     HttpClientModule,
     ChartsModule,
-    MatFormFieldModule,
-    MatInputModule
+    MaterialModule
   ],
   providers: [AuthserviceService, AgeService],
   bootstrap: [AppComponent]
