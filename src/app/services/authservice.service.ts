@@ -102,6 +102,22 @@ export class AuthserviceService {
         } 
       });
   }
+  anonymousLogin() {
+    this.afAuth
+      .auth
+      .signInAnonymously()
+      .then(value => {
+        localStorage.setItem('usuario', value.uid);
+        this.updateUserData(value)
+        console.log('Nice, it worked!');
+        console.log(value);
+        this.router.navigate(['home'])
+      })
+      .catch(err => {
+        console.log('Something went wrong:', err.message);
+      });
+  }
+
   logout() {
     this.afAuth
       .auth

@@ -41,6 +41,14 @@
           <button type="submit" [disabled]="!userForm.valid">Ingresar</button>
           <!-- <span *ngIf="userForm.valid">Form is valid</span> -->
         </form>
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label></mat-label>
+            <input matInput placeholder="Just a placeholder">
+          </mat-form-field>
+          <label for="anonymous">O ingresa de manera anóima</label>
+          <button (click)="anonymouslogin()">Aquí</button>
+        </div>
       </div>
     </div>
   </div>

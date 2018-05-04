@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { MatFormFieldModule, MatFormFieldControl } from '@angular/material/form-field';
 import { AuthserviceService } from "../services/authservice.service";
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms'
 
@@ -27,6 +28,9 @@ export class LoginComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+  anonymouslogin():void{
+    this.authService.anonymousLogin();
   }
 
   ngOnInit() {
