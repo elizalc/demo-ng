@@ -11,11 +11,19 @@
           <h3>Registrate</h3>
           <p class="toggle" (click)="toggleForm()">Ya tengo una cuenta</p>
           <hr>
-          <label for="email">Correo electrónico</label>
-          <input type="email" formControlName="email" [(ngModel)]="email" required>
-          <div class="errors" *ngIf="formErrors.email">
-            {{ formErrors.email }}
-          </div>
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Email" formControlName="email">
+            <mat-hint *ngIf="userForm.controls.email.invalid && userForm.controls.email.touched">
+              <mat-error align="start" *ngIf="userForm.controls.email.errors?.required" class="form__error">
+                Email field can't be blank
+              </mat-error>
+              <mat-error align="start" *ngIf="userForm.controls.email.errors?.pattern" class="form__error">
+                Ingresa un email válido
+              </mat-error>
+            </mat-hint>
+          </mat-form-field>
+
           <label for="password">Contraseña</label>
           <input type="password" formControlName="password" [(ngModel)]="password" required>
           <div class="errors" *ngIf="formErrors.password">

@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     this.userForm = this.fb.group({
       'email': ['', [
         Validators.required,
-        Validators.email
+        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')
       ]
       ],
       'password': ['', [
@@ -56,26 +56,26 @@ export class LoginComponent implements OnInit {
       ],
     });
 
-    this.userForm.valueChanges.subscribe(data => this.onValueChanged(data));
-    this.onValueChanged(); // reset validation messages
+    // this.userForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    // this.onValueChanged(); // reset validation messages
   }
 
   // Updates validation state on form changes.
-  onValueChanged(data?: any) {
-    if (!this.userForm) { return; }
-    const form = this.userForm;
-    for (const field in this.formErrors) {
-      // clear previous error message (if any)
-      this.formErrors[field] = '';
-      const control = form.get(field);
-      if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
-        }
-      }
-    }
-  }
+  // onValueChanged(data?: any) {
+  //   if (!this.userForm) { return; }
+  //   const form = this.userForm;
+  //   for (const field in this.formErrors) {
+  //     // clear previous error message (if any)
+  //     this.formErrors[field] = '';
+  //     const control = form.get(field);
+  //     if (control && control.dirty && !control.valid) {
+  //       const messages = this.validationMessages[field];
+  //       for (const key in control.errors) {
+  //         this.formErrors[field] += messages[key] + ' ';
+  //       }
+  //     }
+  //   }
+  // }
 
   formErrors = {
     'email': '',
