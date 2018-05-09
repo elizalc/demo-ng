@@ -1,93 +1,32 @@
 <div class="container-full full-page">
-  <div class="row h-100">
-    <div class="col-12 col-md-6">
-      <div class="container-logo h-100">
-        <img class="img-fluid" src="../../assets/img/Centro integral logotipo-01.jpg" alt="">
+  <div class="row m-0 h-100">
+    <div class="col-12 col-md-4">  
+      <div class="container-form h-100">
+        <div class="center-form">
+          <form [formGroup]="userForm" (ngSubmit)="login()">
+            <h3>Hey there!</h3>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Email" formControlName="email" [(ngModel)]="email">
+              <mat-error *ngIf="formErrors.email" align="start" class="form__error">
+                {{ formErrors.email }}
+              </mat-error>
+            </mat-form-field>     
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Password" type="password" formControlName="password" [(ngModel)]="password">
+              <mat-error *ngIf="formErrors.password" align="start" class="form__error">
+                {{ formErrors.password }}
+              </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!userForm.valid">Login</button>
+          </form>
+  
+          <div class="form-group">
+            <p>Or enter anonymously <a href="javascript:void(0)" (click)="anonymouslogin()">here</a></p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-12 col-md-6">  
-      <div class="container-form h-100">
-        <form [formGroup]="userForm" *ngIf="newUser" (ngSubmit)="signup()">
-          <h3>Registrate</h3>
-          <p class="toggle" (click)="toggleForm()">Ya tengo una cuenta</p>
-          <hr>
-
-          <mat-form-field class="example-full-width">
-            <input matInput placeholder="Email" formControlName="email">
-            <mat-hint *ngIf="userForm.controls.email.invalid && userForm.controls.email.touched">
-              <mat-error align="start" *ngIf="userForm.controls.email.errors?.required" class="form__error">
-                Email field can't be blank
-              </mat-error>
-              <mat-error align="start" *ngIf="userForm.controls.email.errors?.pattern" class="form__error">
-                Ingresa un email válido
-              </mat-error>
-            </mat-hint>
-          </mat-form-field>
-
-          <label for="password">Contraseña</label>
-          <input type="password" formControlName="password" [(ngModel)]="password" required>
-          <div class="errors" *ngIf="formErrors.password">
-            {{ formErrors.password }}
-          </div>
-          <button type="submit" [disabled]="!userForm.valid">Registrar</button>
-          <!-- <span *ngIf="userForm.valid">Form is valid</span> -->
-        </form>
-        <form [formGroup]="userForm" *ngIf="!newUser" (ngSubmit)="login()">
-          <h3>Ingresa aquí</h3>
-          <p class="toggle" (click)="toggleForm()">Aún no tengo una cuenta</p>
-          <hr>
-          <label for="email">Correo electrónico</label>
-          <input type="email" formControlName="email" [(ngModel)]="email" required>
-          <div class="errors" *ngIf="formErrors.email">
-            {{ formErrors.email }}
-          </div>
-          <label for="password">Contraseña</label>
-          <input type="password" formControlName="password" [(ngModel)]="password" required>
-          <div class="errors" *ngIf="formErrors.password">
-            {{ formErrors.password }}
-          </div>
-          <button type="submit" [disabled]="!userForm.valid">Ingresar</button>
-          <!-- <span *ngIf="userForm.valid">Form is valid</span> -->
-        </form>
-        <div class="form-group">
-            <mat-form-field>
-              <mat-label></mat-label>
-              <input matInput placeholder="Just a placeholder">
-            </mat-form-field>
-          <label for="anonymous">O ingresa de manera anóima</label>
-          <button (click)="anonymouslogin()">Aquí</button>
-        </div>
-        <div>
-          <mat-toolbar color="primary">
-            <span>
-              <mat-icon>mood</mat-icon>
-            </span>
-        
-            <span>Yay, Material in Angular 2!</span>
-        
-            <button mat-icon-button [mat-menu-trigger-for]="menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-          </mat-toolbar>
-          <mat-menu x-position="before" #menu="matMenu">
-            <button mat-menu-item>Option 1</button>
-            <button mat-menu-item>Option 2</button>
-          </mat-menu>
-        
-          <mat-card>
-            <button mat-button>All</button>
-            <button mat-raised-button>Of</button>
-            <button mat-raised-button color="primary">The</button>
-            <button mat-raised-button color="accent">Buttons</button>
-          </mat-card>
-        
-          <span class="done">
-            <button mat-fab>
-              <mat-icon>check circle</mat-icon>
-            </button>
-          </span>
-        </div>
-      </div>
+    <div class="col-md-4 bg-image" >
     </div>
   </div>
 </div>

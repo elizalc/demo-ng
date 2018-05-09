@@ -1,0 +1,25 @@
+@import "~bootstrap/scss/bootstrap";
+@import "variables";
+@import "mixins";
+@import "~ngx-toastr/toastr-bs4-alert";
+body {
+    color: $blue;
+    font-size: 14px;
+}
+
+.full-page {
+    height: 100vh;
+}
+
+.container-form {
+    @include center-content
+}
+
+.center-form {
+    padding: 25px;
+}
+
+.example-full-width {
+    width: 100%;
+    max-width: 300px;
+}

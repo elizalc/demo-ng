@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatFormFieldModule, MatFormFieldControl } from '@angular/material/form-field';
 import { AuthserviceService } from "../services/authservice.service";
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { MaterialModule } from './../material.module';
+import anime from 'animejs'
 
 @Component({
   selector: 'app-login',
@@ -37,9 +38,9 @@ export class LoginComponent implements OnInit {
     this.buildForm();
   }
 
-  toggleForm(): void {
-    this.newUser = !this.newUser;
-  }
+  // toggleForm(): void {
+  //   this.newUser = !this.newUser;
+  // }
 
   buildForm(): void {
     this.userForm = this.fb.group({
@@ -49,33 +50,17 @@ export class LoginComponent implements OnInit {
       ]
       ],
       'password': ['', [
-        //Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$'),
+        Validators.required,
         Validators.minLength(6),
         Validators.maxLength(25)
       ]
       ],
     });
 
-    // this.userForm.valueChanges.subscribe(data => this.onValueChanged(data));
-    // this.onValueChanged(); // reset validation messages
+    this.userForm.valueChanges.subscribe(data => this.onValueChanged(data));
   }
 
-  // Updates validation state on form changes.
-  // onValueChanged(data?: any) {
-  //   if (!this.userForm) { return; }
-  //   const form = this.userForm;
-  //   for (const field in this.formErrors) {
-  //     // clear previous error message (if any)
-  //     this.formErrors[field] = '';
-  //     const control = form.get(field);
-  //     if (control && control.dirty && !control.valid) {
-  //       const messages = this.validationMessages[field];
-  //       for (const key in control.errors) {
-  //         this.formErrors[field] += messages[key] + ' ';
-  //       }
-  //     }
-  //   }
-  // }
+  
 
   formErrors = {
     'email': '',
@@ -84,14 +69,30 @@ export class LoginComponent implements OnInit {
 
   validationMessages = {
     'email': {
-      'required': 'El correo es obligatorio',
-      'email': 'Ingresa un correo válido'
+      'required': 'Email is required',
+      'pattern': 'Email is invalid'
     },
     'password': {
-      'required': 'La contraseña es obligatoria',
-      //'pattern': 'Password must be include at one letter and one number.',
+      'required': 'Password is required',
       'minlength': 'Debe tener 6 caracteres como mínimo',
       'maxlength': 'Password cannot be more than 40 characters long.',
     }
   };
+
+  // Updates validation state on form changes.
+  onValueChanged(data?: any) {
+    if (!this.userForm) { return; }
+    const form = this.userForm;
+    for (const field in this.formErrors) {
+      // clear previous error message (if any)
+      this.formErrors[field] = '';
+      const control = form.get(field);
+      if (control && control.invalid && control.dirty) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field] += messages[key] + ' ';
+        }
+      }
+    }
+  }
 }

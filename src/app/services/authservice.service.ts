@@ -96,9 +96,13 @@ export class AuthserviceService {
         console.log('Something went wrong:', err.message);
         console.log(err);
         if (err.code == "auth/wrong-password"){
-          this.toastr.error('Contraseña incorrecta, intenta otra vez');
+          this.toastr.error('Contraseña incorrecta','Intenta otra vez',{
+            timeOut: 3000,
+          });
         } else if (err.code == "auth/user-not-found"){
-          this.toastr.error('Usuario no encontrado');
+          this.toastr.error('Usuario no encontrado', 'Intenta otra vez',{
+            timeOut: 3000,
+          });
         } 
       });
   }
