@@ -9,12 +9,15 @@ export class AuthguardService {
   constructor(public auth: AuthserviceService, public router: Router) { }
   
   canActivate() {
-    if(this.auth.loginUser == null){
-      this.router.navigateByUrl('/');
-      return false
-    }
-    return true
-    //return this.auth.isLoggedIn();
+    // if(this.auth.loginUser == undefined){
+    //   console.log(this.auth.loginUser)
+    //   console.log('loginUser null')
+    //   this.router.navigateByUrl('/');
+    //   return false
+    // }
+    // console.log('no null')
+    // return true
+    return this.auth.isLoggedIn();
   }
 
 }  
