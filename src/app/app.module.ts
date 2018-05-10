@@ -23,7 +23,7 @@ import { MaterialModule } from './material.module';
 
 import { AuthserviceService } from './services/authservice.service';
 import { AgeService } from "./services/age.service";
-
+import { AuthguardService } from "./services/authguard.service";
 
 @NgModule({
   declarations: [
@@ -47,7 +47,7 @@ import { AgeService } from "./services/age.service";
     ChartsModule,
     MaterialModule
   ],
-  providers: [AuthserviceService, AgeService],
+  providers: [AuthserviceService, AgeService, AuthguardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

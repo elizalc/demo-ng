@@ -67,3 +67,6 @@
     </ngb-tab>
   </ngb-tabset>
 </div>
+<button (click)="logout()" *ngIf="authService.user | async">
+  Logout
+</button>

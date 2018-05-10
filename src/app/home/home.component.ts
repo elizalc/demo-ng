@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, OnChanges  } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AgeService } from "../services/age.service";
+import { AuthserviceService } from "../services/authservice.service";
 import { ChartsModule } from 'ng2-charts';
 
 interface User {
@@ -31,7 +32,7 @@ export class HomeComponent implements OnInit, OnChanges {
   ctx: any;
   chart = [];
 
-  constructor( @Inject(FormBuilder) private fb: FormBuilder, private afs: AngularFirestore, private age:AgeService ) {
+  constructor(@Inject(FormBuilder) private fb: FormBuilder, private afs: AngularFirestore, private age: AgeService, private authService: AuthserviceService  ) {
 
   }
 
@@ -43,6 +44,9 @@ export class HomeComponent implements OnInit, OnChanges {
   }
   ngOnInit() {
     this.buildForm();
+  }
+  logout(): void {
+    this.authService.logout();
   }
 
   private updateUserData(user) {

@@ -22,7 +22,9 @@ interface User {
 export class AuthserviceService {
 
   user: Observable<User>;
+  userDetails: firebase.User;
   currentUser: User;
+  loginUser: any
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -41,6 +43,7 @@ export class AuthserviceService {
     this.user.subscribe
     (user => {
       if (user) {
+        this.loginUser = user
         console.log(user);
         return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
       } else {
@@ -87,10 +90,10 @@ export class AuthserviceService {
       .auth
       .signInWithEmailAndPassword(email, password)
       .then(value => {
+        this.router.navigate(['home'])
         this.updateUserData(value)
         console.log('Nice, it worked!');
         console.log(value);
-        this.router.navigate(['home'])
       })
       .catch(err => {
         console.log('Something went wrong:', err.message);
@@ -121,8 +124,23 @@ export class AuthserviceService {
         console.log('Something went wrong:', err.message);
       });
   }
+  isLoggedIn() {
+    console.log(this.loginUser)
+    this.user = this.afAuth.authState;
+    this.user.subscribe
+      (user => {
+        console.log(user)
+        if (user == null) {
+          this.router.navigateByUrl('/');
+          return false;
+        } 
+      });
+    return true;
+  }
 
   logout() {
+    localStorage.clear();
+    this.router.navigateByUrl('/');
     this.afAuth
       .auth
       .signOut();
